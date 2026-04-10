@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* ============================================
+   Dermancy Theme — shadcn-compatible variables
+   ============================================ */
+@theme {
+  --color-background: #F7F5F2;
+  --color-foreground: #2B2B2B;
+  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
+
+/* ============================================
+   Import existing Dermancy section styles
+   into the 'base' layer so Tailwind utilities
+   always take precedence (fixes margin/spacing)
+   ============================================ */
+@import "../css/variables.css" layer(base);
+@import "../css/reset.css" layer(base);
+@import "../css/global.css" layer(base);
+@import "../css/header.css" layer(base);
+@import "../css/sections.css" layer(base);
+
+/* ============================================
+   Header visibility override for React app
+   (starts hidden, appears on scroll past hero)
+   ============================================ */
+@layer base {
+  .header {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-100%);
+    transition:
+      opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      visibility 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      background-color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .header.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  /* Hide scrollbar for horizontal carousel */
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
