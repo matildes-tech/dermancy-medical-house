@@ -1,0 +1,480 @@
+/* ============================================
+   BRAND STATEMENT
+   ============================================ */
+
+.brand-statement {
+  background-color: var(--color-ivory);
+}
+
+.brand-statement__text {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-relaxed);
+  color: var(--color-charcoal);
+  font-style: normal;
+  max-width: var(--max-width-text);
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .brand-statement__text {
+    font-size: var(--fs-xl);
+    max-width: 640px;
+  }
+}
+
+
+/* ============================================
+   PHILOSOPHY
+   ============================================ */
+
+.philosophy {
+  background-color: var(--color-ivory);
+}
+
+.philosophy__grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.philosophy__image .img-wrap {
+  border-radius: var(--radius-lg);
+  aspect-ratio: 4 / 5;
+}
+
+.philosophy__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .philosophy__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .philosophy__image .img-wrap {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .philosophy__grid {
+    gap: var(--space-3xl);
+  }
+}
+
+
+/* ============================================
+   DOCTOR FEATURE
+   ============================================ */
+
+.doctor {
+  background-color: var(--color-beige);
+}
+
+.doctor__grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.doctor__image .img-wrap {
+  border-radius: var(--radius-xl);
+  aspect-ratio: 3 / 4;
+  max-width: 400px;
+}
+
+.doctor__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .doctor__grid {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .doctor__image {
+    /* Offset for editorial asymmetry */
+    margin-top: var(--space-lg);
+  }
+
+  .doctor__image .img-wrap {
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .doctor__grid {
+    grid-template-columns: 5fr 6fr;
+    gap: var(--space-3xl);
+  }
+
+  .doctor__image {
+    margin-top: var(--space-xl);
+  }
+}
+
+
+/* ============================================
+   TREATMENTS
+   ============================================ */
+
+.treatments {
+  background-color: var(--color-ivory);
+}
+
+.treatments__header {
+  margin-bottom: var(--space-lg);
+}
+
+.treatments__grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.treatment-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  aspect-ratio: 4 / 5;
+}
+
+.treatment-card__image {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+}
+
+.treatment-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark gradient at bottom for text readability */
+.treatment-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(43, 43, 43, 0.55), transparent);
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.treatment-card__label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: var(--space-md);
+}
+
+.treatment-card__label span {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  color: var(--color-white);
+  font-weight: var(--fw-semibold);
+}
+
+.treatments__cta {
+  margin-top: var(--space-lg);
+}
+
+/* 2-column on tablet */
+@media (min-width: 480px) {
+  .treatments__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .treatment-card {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* Editorial uneven grid on desktop */
+@media (min-width: 1024px) {
+  .treatments__grid {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    gap: var(--space-md);
+  }
+
+  .treatment-card:nth-child(1) {
+    grid-column: 1 / 6;
+    grid-row: 1 / 2;
+    aspect-ratio: 3 / 4;
+  }
+
+  .treatment-card:nth-child(2) {
+    grid-column: 6 / 13;
+    grid-row: 1 / 2;
+    aspect-ratio: 4 / 3;
+  }
+
+  .treatment-card:nth-child(3) {
+    grid-column: 1 / 8;
+    grid-row: 2 / 3;
+    aspect-ratio: 16 / 9;
+  }
+
+  .treatment-card:nth-child(4) {
+    grid-column: 8 / 13;
+    grid-row: 2 / 3;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+
+/* ============================================
+   EXPERIENCE
+   ============================================ */
+
+.experience {
+  background-color: var(--color-beige);
+}
+
+
+/* ============================================
+   BOOKING
+   ============================================ */
+
+.booking {
+  background-color: var(--color-ivory);
+}
+
+.booking__card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-md);
+  max-width: 520px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-card);
+}
+
+.booking__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-olive);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: var(--fs-base);
+  background-color: var(--color-ivory);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-smooth),
+              box-shadow var(--duration-fast) var(--ease-smooth);
+}
+
+.form-input::placeholder {
+  color: var(--color-taupe);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-olive);
+  box-shadow: 0 0 0 3px rgba(74, 90, 82, 0.1);
+}
+
+.form-input.is-invalid {
+  border-color: #c0392b;
+}
+
+.form-error {
+  font-size: var(--fs-xs);
+  color: #c0392b;
+  display: none;
+}
+
+.form-group.has-error .form-error {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .booking__card {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+}
+
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+  background-color: var(--color-charcoal);
+  color: var(--color-beige);
+  padding: var(--space-xl) var(--space-md) var(--space-md);
+}
+
+.footer__grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.footer__logo {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  margin-bottom: var(--space-xs);
+}
+
+.footer__tagline {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-light);
+  font-style: normal;
+  color: var(--color-taupe);
+}
+
+.footer__nav-title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  margin-bottom: var(--space-sm);
+}
+
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__link {
+  font-size: var(--fs-sm);
+  color: var(--color-taupe);
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+
+.footer__link:hover {
+  color: var(--color-ivory);
+}
+
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__social-icons {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(184, 169, 153, 0.3);
+  color: var(--color-taupe);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.footer__social-link:hover {
+  color: var(--color-ivory);
+  border-color: var(--color-ivory);
+}
+
+.footer__bottom {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(184, 169, 153, 0.15);
+  font-size: var(--fs-xs);
+  color: var(--color-taupe);
+}
+
+/* Responsive footer grid */
+@media (min-width: 768px) {
+  .footer {
+    padding: var(--space-2xl) var(--space-lg) var(--space-md);
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer__grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+}
+
+
+/* ============================================
+   STICKY MOBILE BOOKING BUTTON
+   ============================================ */
+
+.sticky-booking {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  padding: var(--space-sm) var(--space-md);
+  background: linear-gradient(to top, var(--color-ivory) 60%, transparent);
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform var(--duration-normal) var(--ease-smooth),
+              opacity var(--duration-normal) var(--ease-smooth);
+  pointer-events: none;
+}
+
+.sticky-booking.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Hide sticky button on desktop */
+@media (min-width: 1024px) {
+  .sticky-booking {
+    display: none;
+  }
+}
+
+/* Add bottom padding to body on mobile so footer isn't hidden behind sticky button */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: 80px;
+  }
+}

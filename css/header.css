@@ -1,0 +1,201 @@
+/* ============================================
+   Header — Over light-background Hero
+   Default: dark text on transparent
+   Scrolled: dark text on frosted ivory
+   ============================================ */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: var(--space-md);
+  transition: background-color var(--duration-normal) var(--ease-smooth),
+              padding var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+/* Scrolled state — added via JS */
+.header.is-scrolled {
+  background-color: rgba(247, 245, 242, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: var(--space-sm) var(--space-md);
+  box-shadow: var(--shadow-subtle);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Logo — dark by default (light hero) */
+.header__logo {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-charcoal);
+  transition: color var(--duration-normal) var(--ease-smooth);
+  line-height: 1;
+}
+
+/* Right side actions */
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Book button — dark by default */
+.header__book-btn {
+  display: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-charcoal);
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.header__book-btn:hover {
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+  border-color: var(--color-charcoal);
+}
+
+/* Hamburger — dark by default */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 110;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: var(--color-charcoal);
+  border-radius: 1px;
+  transition: all var(--duration-normal) var(--ease-smooth);
+  transform-origin: center;
+}
+
+/* Hamburger open state */
+.hamburger.is-open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.is-open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ---- Mobile Nav Overlay ---- */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--color-ivory);
+  z-index: 105;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-lg);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-normal) var(--ease-smooth),
+              visibility var(--duration-normal) var(--ease-smooth);
+}
+
+.mobile-nav.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav__link {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
+  color: var(--color-charcoal);
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+
+.mobile-nav__link:hover {
+  color: var(--color-olive);
+}
+
+.mobile-nav__cta {
+  margin-top: var(--space-md);
+}
+
+/* ---- Responsive ---- */
+@media (min-width: 480px) {
+  .header__book-btn {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hamburger {
+    display: none;
+  }
+
+  .mobile-nav {
+    position: static;
+    width: auto;
+    height: auto;
+    background: none;
+    opacity: 1;
+    visibility: visible;
+    flex-direction: row;
+    gap: var(--space-lg);
+  }
+
+  .mobile-nav__link {
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--color-charcoal);
+    transition: color var(--duration-fast) var(--ease-smooth);
+  }
+
+  .mobile-nav__link:hover {
+    color: var(--color-taupe);
+  }
+
+  .mobile-nav__cta {
+    display: none;
+  }
+
+  .header__inner {
+    gap: var(--space-lg);
+  }
+}
