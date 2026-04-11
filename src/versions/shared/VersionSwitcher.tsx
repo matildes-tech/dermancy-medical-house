@@ -3,7 +3,7 @@ import { useState } from 'react';
 const versions = [
   { id: 'v1', label: 'V1', desc: 'Bold Modern' },
   { id: 'v2', label: 'V2', desc: 'Editorial Olive' },
-  { id: 'v3', label: 'V3', desc: 'Script Signature' },
+  { id: 'v3', label: 'V3', desc: 'Haute Editorial' },
 ] as const;
 
 export type VersionId = (typeof versions)[number]['id'];
