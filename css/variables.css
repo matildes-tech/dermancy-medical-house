@@ -4,13 +4,15 @@
 
 :root {
   /* --- Colors --- */
-  --color-ivory: #F7F5F2;
+  --color-ivory: #F5F3EE;
   --color-beige: #E8E1D9;
   --color-olive: #4A5A52;
   --color-taupe: #B8A999;
-  --color-charcoal: #2B2B2B;
+  --color-charcoal: #2C2C2A;
   --color-white: #FFFFFF;
   --color-black: #000000;
+  --color-gold: #B8A882;
+  --color-muted: #888780;
 
   /* Derived / UI colors */
   --color-overlay: rgba(43, 43, 43, 0.45);
@@ -19,8 +21,9 @@
   --color-card-bg: var(--color-white);
 
   /* --- Typography --- */
-  --font-serif: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
-  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
 
   --fs-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
   --fs-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);

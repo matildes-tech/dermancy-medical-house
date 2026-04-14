@@ -10,7 +10,10 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  padding: var(--space-md);
+  padding: 16px 28px;
+  background-color: rgba(245, 243, 238, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: background-color var(--duration-normal) var(--ease-smooth),
               padding var(--duration-normal) var(--ease-smooth),
               box-shadow var(--duration-normal) var(--ease-smooth);
@@ -18,11 +21,16 @@
 
 /* Scrolled state — added via JS */
 .header.is-scrolled {
-  background-color: rgba(247, 245, 242, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(245, 243, 238, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--shadow-subtle);
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding: 18px 48px;
+  }
 }
 
 .header__inner {
@@ -33,12 +41,12 @@
   margin: 0 auto;
 }
 
-/* Logo — dark by default (light hero) */
+/* Logo — "Dermancy" only, DM Sans 13px */
 .header__logo {
   font-family: var(--font-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-wider);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-charcoal);
   transition: color var(--duration-normal) var(--ease-smooth);
@@ -52,19 +60,19 @@
   gap: var(--space-sm);
 }
 
-/* Book button — dark by default */
+/* Book consultation — pill CTA with charcoal border */
 .header__book-btn {
   display: none;
   font-family: var(--font-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-wide);
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--color-charcoal);
-  padding: 0.5rem 1.2rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  padding: 8px 20px;
+  border: 0.5px solid var(--color-charcoal);
+  border-radius: 24px;
   transition: all var(--duration-normal) var(--ease-smooth);
+  white-space: nowrap;
 }
 
 .header__book-btn:hover {

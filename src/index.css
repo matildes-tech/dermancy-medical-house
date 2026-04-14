@@ -4,10 +4,10 @@
    Dermancy Theme — shadcn-compatible variables
    ============================================ */
 @theme {
-  --color-background: #F7F5F2;
-  --color-foreground: #2B2B2B;
-  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --color-background: #F5F3EE;
+  --color-foreground: #2C2C2A;
+  --font-sans: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 }
 
 /* ============================================
@@ -26,24 +26,16 @@
    (starts hidden, appears on scroll past hero)
    ============================================ */
 @layer base {
+  /* Header is always visible (sticky with blur) */
   .header {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-100%);
-    transition:
-      opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-      visibility 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-      transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-      background-color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-      padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-
-  .header.is-visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
     transform: translateY(0);
+    transition:
+      background-color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      box-shadow 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
   /* Hide scrollbar for horizontal carousel */

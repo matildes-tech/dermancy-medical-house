@@ -440,41 +440,4 @@
 }
 
 
-/* ============================================
-   STICKY MOBILE BOOKING BUTTON
-   ============================================ */
-
-.sticky-booking {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 90;
-  padding: var(--space-sm) var(--space-md);
-  background: linear-gradient(to top, var(--color-ivory) 60%, transparent);
-  transform: translateY(100%);
-  opacity: 0;
-  transition: transform var(--duration-normal) var(--ease-smooth),
-              opacity var(--duration-normal) var(--ease-smooth);
-  pointer-events: none;
-}
-
-.sticky-booking.is-visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Hide sticky button on desktop */
-@media (min-width: 1024px) {
-  .sticky-booking {
-    display: none;
-  }
-}
-
-/* Add bottom padding to body on mobile so footer isn't hidden behind sticky button */
-@media (max-width: 1023px) {
-  body {
-    padding-bottom: 80px;
-  }
-}
+/* Sticky booking bar removed — only CTA is nav button + booking form */

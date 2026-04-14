@@ -1,25 +1,21 @@
-'use client'
+import { useRef, type ReactNode } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-import { useRef, type ReactNode } from "react"
-import { motion, useScroll, useTransform } from 'framer-motion'
-
-interface ParallaxSection {
+export interface ParallaxSection {
   id: string | number;
   content: ReactNode;
-  imageUrl: string;
-  imageAlt: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  imageElement?: ReactNode;
   reverse?: boolean;
 }
 
-interface ParallaxScrollProps {
+interface ParallaxScrollFeatureSectionProps {
   sections: ParallaxSection[];
   className?: string;
 }
 
-/**
- * Single parallax section — handles its own scroll-linked animations.
- * Text slides up + fades in, image reveals with a clip-path wipe.
- */
 function ParallaxItem({ section }: { section: ParallaxSection }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -29,44 +25,43 @@ function ParallaxItem({ section }: { section: ParallaxSection }) {
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.7], [0, 1]);
-  const clipPath = useTransform(
-    scrollYProgress,
-    [0, 0.7],
-    ["inset(0 100% 0 0)", "inset(0 0% 0 0)"]
-  );
-  const translateY = useTransform(scrollYProgress, [0, 1], [-50, 0]);
+  const clipPath = useTransform(scrollYProgress, [0, 0.7], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"]);
+  const translateY = useTransform(scrollYProgress, [0, 1], [50, 0]);
 
   return (
     <div
       ref={ref}
-      className={`min-h-screen flex items-center justify-center gap-10 px-6 md:gap-20 lg:gap-40 md:px-12 ${
-        section.reverse ? "flex-col-reverse md:flex-row-reverse" : "flex-col md:flex-row"
-      }`}
+      className={cn(
+        "min-h-[75vh] flex items-center justify-center gap-8 md:gap-16 lg:gap-24 px-6 md:px-10",
+        "flex-col md:flex-row",
+        section.reverse && "md:flex-row-reverse"
+      )}
     >
-      {/* Text content */}
-      <motion.div style={{ y: translateY, opacity }} className="max-w-sm">
+      <motion.div style={{ y: translateY, opacity }} className="max-w-md">
         {section.content}
       </motion.div>
 
-      {/* Image with clip-path reveal */}
-      <motion.div
-        style={{ opacity, clipPath }}
-        className="relative"
-      >
-        <img
-          src={section.imageUrl}
-          className="w-64 h-64 object-cover rounded-lg sm:w-72 sm:h-72 md:w-80 md:h-80"
-          alt={section.imageAlt}
-          loading="lazy"
-        />
-      </motion.div>
+      {(section.imageUrl || section.imageElement) && (
+        <motion.div style={{ opacity, clipPath }} className="relative">
+          {section.imageElement ? (
+            section.imageElement
+          ) : (
+            <img
+              src={section.imageUrl}
+              alt={section.imageAlt || ""}
+              className="w-72 h-80 md:w-80 md:h-96 object-cover rounded-lg"
+              loading="lazy"
+            />
+          )}
+        </motion.div>
+      )}
     </div>
   );
 }
 
-export function ParallaxScrollFeatureSection({ sections, className }: ParallaxScrollProps) {
+export function ParallaxScrollFeatureSection({ sections, className }: ParallaxScrollFeatureSectionProps) {
   return (
-    <div className={className}>
+    <div className={cn("flex flex-col", className)}>
       {sections.map((section) => (
         <ParallaxItem key={section.id} section={section} />
       ))}
