@@ -3,7 +3,7 @@ import { useState } from 'react';
 const versions = [
   { id: 'v1', label: 'V1', desc: 'Bold Modern' },
   { id: 'v2', label: 'V2', desc: 'Editorial Olive' },
-  { id: 'v3', label: 'V3', desc: 'Haute Editorial' },
+  { id: 'v3', label: 'V3', desc: 'Stitch Editorial' },
 ] as const;
 
 export type VersionId = (typeof versions)[number]['id'];
@@ -23,8 +23,8 @@ export function VersionSwitcher({ current, onChange }: Props) {
         onClick={() => setOpen(!open)}
         style={{
           width: 40, height: 40, borderRadius: '50%',
-          background: current === 'v1' ? '#FACC15' : current === 'v2' ? '#4A5A52' : '#2B2B2B',
-          color: current === 'v1' ? '#2B2B2B' : '#F7F5F2',
+          background: current === 'v1' ? '#FACC15' : current === 'v3' ? '#B8A882' : '#4A5A52',
+          color: current === 'v1' ? '#2B2B2B' : current === 'v3' ? '#1A1A1A' : '#F7F5F2',
           border: '2px solid rgba(255,255,255,0.3)',
           fontSize: 11, fontWeight: 700, cursor: 'pointer',
           boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
@@ -64,8 +64,8 @@ export function VersionSwitcher({ current, onChange }: Props) {
             >
               <span style={{
                 width: 28, height: 28, borderRadius: '50%',
-                background: v.id === 'v1' ? '#FACC15' : v.id === 'v2' ? '#4A5A52' : '#2B2B2B',
-                color: v.id === 'v1' ? '#2B2B2B' : '#F7F5F2',
+                background: v.id === 'v1' ? '#FACC15' : v.id === 'v3' ? '#B8A882' : '#4A5A52',
+                color: v.id === 'v1' ? '#2B2B2B' : v.id === 'v3' ? '#1A1A1A' : '#F7F5F2',
                 fontSize: 10, fontWeight: 700,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>

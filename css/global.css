@@ -29,22 +29,22 @@
   letter-spacing: var(--ls-wider);
 }
 
-/* --- Label/eyebrow --- */
+/* --- Label/eyebrow (gold uppercase) --- */
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: var(--fs-xs);
+  font-size: 11px;
   font-weight: var(--fw-medium);
   text-transform: uppercase;
-  letter-spacing: var(--ls-wider);
-  color: var(--color-taupe);
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
   margin-bottom: var(--space-sm);
 }
 
-/* --- Section title --- */
+/* --- Section title (Cormorant Garamond display) --- */
 .section-title {
-  font-family: var(--font-sans);
-  font-size: var(--fs-xl);
-  font-weight: var(--fw-semibold);
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
   line-height: var(--lh-snug);
   color: var(--color-charcoal);
   margin-bottom: var(--space-md);
@@ -69,21 +69,20 @@
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
-  border-radius: var(--radius-full);
+  border-radius: 8px;
   transition: all var(--duration-normal) var(--ease-smooth);
   padding: 0.9rem 2rem;
   white-space: nowrap;
 }
 
 .btn--primary {
-  background-color: var(--color-olive);
+  background-color: var(--color-charcoal);
   color: var(--color-ivory);
-  border: 1px solid var(--color-olive);
+  border: 1px solid var(--color-charcoal);
 }
 
 .btn--primary:hover {
-  background-color: var(--color-charcoal);
-  border-color: var(--color-charcoal);
+  opacity: 0.85;
 }
 
 .btn--outline {
@@ -168,14 +167,12 @@
 }
 
 /* --- Responsive breakpoints --- */
-@media (min-width: 768px) {
-  .section {
-    padding: var(--section-padding-tablet);
-  }
+.section {
+  padding: 80px 28px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .section {
-    padding: var(--section-padding-desktop);
+    padding: 100px 48px;
   }
 }

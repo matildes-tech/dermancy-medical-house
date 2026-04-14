@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { LucideIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 // Define the props interface for type safety and reusability
@@ -21,14 +22,27 @@ interface MinimalistHeroProps {
 }
 
 // Helper component for navigation links
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a
-    href={href}
-    className="text-sm font-medium tracking-widest text-foreground/60 transition-colors hover:text-foreground"
-  >
-    {children}
-  </a>
-);
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+  const isInternal = href.startsWith('/') && !href.startsWith('#');
+  if (isInternal) {
+    return (
+      <Link
+        to={href}
+        className="text-sm font-medium tracking-widest text-foreground/60 transition-colors hover:text-foreground"
+      >
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a
+      href={href}
+      className="text-sm font-medium tracking-widest text-foreground/60 transition-colors hover:text-foreground"
+    >
+      {children}
+    </a>
+  );
+};
 
 // Helper component for social media icons
 const SocialIcon = ({ href, icon: Icon }: { href: string; icon: LucideIcon }) => (

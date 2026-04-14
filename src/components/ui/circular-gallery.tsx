@@ -1,9 +1,11 @@
 import React, { useRef, useState, useEffect, HTMLAttributes } from 'react';
+import { Link } from 'react-router-dom';
 
 // Define the type for a single gallery item
 export interface GalleryItem {
   common: string;
   binomial: string;
+  slug?: string;
   photo: {
     url: string;
     text: string;
@@ -72,16 +74,8 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
           }}
           className="hide-scrollbar"
         >
-          {items.map((item) => (
-            <div
-              key={item.common}
-              data-card
-              style={{
-                flex: '0 0 auto',
-                width: 'clamp(260px, 70vw, 340px)',
-                scrollSnapAlign: 'start',
-              }}
-            >
+          {items.map((item) => {
+            const cardContent = (
               <div
                 style={{
                   position: 'relative',
@@ -128,8 +122,37 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                   </p>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+
+            return item.slug ? (
+              <Link
+                key={item.common}
+                to={`/care/${item.slug}`}
+                data-card
+                style={{
+                  flex: '0 0 auto',
+                  width: 'clamp(260px, 70vw, 340px)',
+                  scrollSnapAlign: 'start',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                {cardContent}
+              </Link>
+            ) : (
+              <div
+                key={item.common}
+                data-card
+                style={{
+                  flex: '0 0 auto',
+                  width: 'clamp(260px, 70vw, 340px)',
+                  scrollSnapAlign: 'start',
+                }}
+              >
+                {cardContent}
+              </div>
+            );
+          })}
         </div>
 
         {/* Desktop arrow buttons */}
