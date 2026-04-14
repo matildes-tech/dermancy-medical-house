@@ -1,28 +1,18 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { Instagram, Facebook } from 'lucide-react';
-import { MinimalistHero } from '@/components/ui/minimalist-hero';
-import { CircularGallery, type GalleryItem } from '@/components/ui/circular-gallery';
-import { ParallaxScrollFeatureSection } from '@/components/ui/parallax-scroll-feature-section';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import ScrollExpandMedia from '@/components/ui/scroll-expansion-hero';
+import { MagicText } from '@/components/ui/magic-text';
+import { ParallaxScrollFeatureSection, type ParallaxSection } from '@/components/ui/parallax-scroll-feature-section';
+import RuixenCarouselWave, { type CarouselCard } from '@/components/ui/ruixen-carousel-wave';
+import { siteData } from '../shared/data';
 
 /* ============================================
-   Dermancy Medical House — React App
+   Dermancy Medical House — V1 Refined
    ============================================ */
 
 export default function V1() {
-  const [headerVisible, setHeaderVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  /* ---- Header scroll visibility ---- */
-  useEffect(() => {
-    const onScroll = () => {
-      const heroHeight = window.innerHeight;
-      const past = window.scrollY > heroHeight - 80;
-      setHeaderVisible(past);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   /* ---- Scroll reveal (IntersectionObserver) ---- */
   useEffect(() => {
@@ -43,30 +33,6 @@ export default function V1() {
     return () => observer.disconnect();
   }, []);
 
-  /* ---- Sticky booking button ---- */
-  useEffect(() => {
-    const sticky = document.getElementById('stickyBooking');
-    const hero = document.getElementById('hero');
-    const booking = document.getElementById('booking');
-    if (!sticky || !hero || !booking) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === hero) {
-            sticky.classList.toggle('is-visible', !entry.isIntersecting);
-          }
-          if (entry.target === booking && entry.isIntersecting) {
-            sticky.classList.remove('is-visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(hero);
-    observer.observe(booking);
-    return () => observer.disconnect();
-  }, []);
-
   /* ---- Toggle mobile menu ---- */
   const toggleMenu = () => {
     setMobileMenuOpen((prev) => {
@@ -80,30 +46,13 @@ export default function V1() {
     document.body.style.overflow = '';
   };
 
-  /* ---- Hero props ---- */
-  const navLinks = [
-    { label: 'PHILOSOPHY', href: '#philosophy' },
-    { label: 'THE DOCTOR', href: '#doctor' },
-    { label: 'TREATMENTS', href: '#treatments' },
-    { label: 'BOOK', href: '#booking' },
-  ];
-
-  const socialLinks = [
-    { icon: Instagram, href: '#' },
-    { icon: Facebook, href: '#' },
-  ];
-
   return (
     <>
-      {/* ========== FIXED HEADER (appears on scroll) ========== */}
-      <header
-        className={`header ${headerVisible ? 'is-visible is-scrolled' : ''}`}
-        id="header"
-        role="banner"
-      >
+      {/* ========== FIXED HEADER — always visible, sticky with blur ========== */}
+      <header className="header is-visible" id="header" role="banner">
         <div className="header__inner">
-          <a href="#" className="header__logo" aria-label="Dermancy Medical House — Home">
-            Dermancy Medical House
+          <a href="/" className="header__logo" aria-label="Dermancy — Home">
+            Dermancy
           </a>
 
           <nav
@@ -111,17 +60,13 @@ export default function V1() {
             id="mobileNav"
             aria-label="Main navigation"
           >
-            <a href="#philosophy" className="mobile-nav__link" onClick={closeMenu}>Philosophy</a>
-            <a href="#doctor" className="mobile-nav__link" onClick={closeMenu}>The Doctor</a>
+            <Link to="/about" className="mobile-nav__link" onClick={closeMenu}>About</Link>
             <a href="#treatments" className="mobile-nav__link" onClick={closeMenu}>Treatments</a>
             <a href="#booking" className="mobile-nav__link" onClick={closeMenu}>Book</a>
-            <div className="mobile-nav__cta">
-              <a href="#booking" className="btn btn--primary" onClick={closeMenu}>Book Appointment</a>
-            </div>
           </nav>
 
           <div className="header__actions">
-            <a href="#booking" className="header__book-btn">Book</a>
+            <a href="#booking" className="header__book-btn">Book consultation</a>
             <button
               className={`hamburger ${mobileMenuOpen ? 'is-open' : ''}`}
               onClick={toggleMenu}
@@ -136,98 +81,27 @@ export default function V1() {
         </div>
       </header>
 
-      {/* ========== HERO — MinimalistHero Component ========== */}
+      {/* ========== HERO — Scroll Expansion with branded image ========== */}
       <section id="hero">
-        <MinimalistHero
-          logoText="DERMANCY"
-          navLinks={navLinks}
-          mainText="Welcome to a space where medical expertise meets aesthetic harmony."
-          readMoreLink="#philosophy"
-          imageSrc="/images/hero-portrait.png"
-          imageAlt="Elegant woman in profile — Dermancy Medical House"
-          overlayText={{
-            part1: 'DERMANCY',
-            part2: 'medical house',
-          }}
-          socialLinks={socialLinks}
-          locationText="Rhodes, Greece"
-        />
+        <ScrollExpandMedia
+          mediaType="image"
+          mediaSrc="/images/dermancy-brand.jpg"
+          bgImageSrc="/images/reception-full.jpg"
+          scrollToExpand="Scroll to explore"
+        >
+          {/* Content revealed after expansion — intentionally empty */}
+          <div />
+        </ScrollExpandMedia>
       </section>
 
-      {/* ========== PARALLAX SCROLL SECTIONS ========== */}
-      <ParallaxScrollFeatureSection
-        sections={[
-          {
-            id: 'brand',
-            reverse: false,
-            imageUrl: 'https://images.unsplash.com/photo-1532926381893-7542571f0e53?w=800&q=80',
-            imageAlt: 'Serene beauty and skincare ritual',
-            content: (
-              <div>
-                <p className="eyebrow">Our Promise</p>
-                <h2 className="section-title">Refinement,<br />Not Transformation</h2>
-                <p className="body-text">
-                  At Dermancy, aesthetic medicine is not about transformation — but refinement.
-                  Each treatment is designed to restore balance, enhance natural features, and respect your individuality.
-                </p>
-              </div>
-            ),
-          },
-          {
-            id: 'philosophy',
-            reverse: true,
-            imageUrl: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=800&q=80',
-            imageAlt: 'Calm, refined clinic environment',
-            content: (
-              <div id="philosophy">
-                <p className="eyebrow">Our Philosophy</p>
-                <h2 className="section-title">Beauty in Balance</h2>
-                <p className="body-text">
-                  We believe aesthetic medicine should never erase your identity — it should refine it.
-                  Our approach is subtle, intentional, and clinically grounded.
-                </p>
-                <a href="#" className="text-link" style={{ marginTop: 'var(--space-md)', display: 'inline-block' }}>
-                  Read More →
-                </a>
-              </div>
-            ),
-          },
-          {
-            id: 'doctor',
-            reverse: false,
-            imageUrl: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80',
-            imageAlt: 'Dr. Ioannis Michalakis portrait',
-            content: (
-              <div id="doctor">
-                <p className="eyebrow">The Doctor</p>
-                <h2 className="section-title">Dr. Ioannis Michalakis</h2>
-                <p className="body-text">
-                  With years of clinical experience and a refined eye for balance, Dr. Michalakis approaches aesthetic medicine as both science and art.
-                  His work focuses on natural, harmonious results that enhance — never alter — your identity.
-                </p>
-                <a href="#" className="text-link" style={{ marginTop: 'var(--space-md)', display: 'inline-block' }}>
-                  Discover the Approach →
-                </a>
-              </div>
-            ),
-          },
-        ]}
-      />
+      {/* ========== CONTENT SECTIONS ========== */}
+      <V1ContentSections />
 
-      {/* ========== TREATMENTS — Circular 3D Gallery ========== */}
-      <TreatmentsCarousel />
+      {/* ========== TREATMENTS — Static Grid ========== */}
+      <TreatmentsGrid />
 
-      {/* ========== EXPERIENCE ========== */}
-      <section className="section experience" id="experience">
-        <div className="container container--narrow text-center reveal">
-          <p className="eyebrow">The Experience</p>
-          <h2 className="section-title">Every Detail Considered</h2>
-          <p className="body-text" style={{ margin: '0 auto' }}>
-            A calm, discreet environment designed for comfort and privacy.
-            From consultation to treatment, every detail is carefully considered to ensure a seamless experience.
-          </p>
-        </div>
-      </section>
+      {/* ========== 3D SCANNING ========== */}
+      <V1ScanningSection />
 
       {/* ========== BOOKING ========== */}
       <BookingSection />
@@ -237,13 +111,22 @@ export default function V1() {
         <div className="container">
           <div className="footer__grid">
             <div className="footer__brand">
-              <p className="footer__logo">Dermancy Medical House</p>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 12,
+                fontWeight: 500,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--color-ivory)',
+                marginBottom: 8,
+              }}>
+                Dermancy Medical House
+              </p>
               <p className="footer__tagline">Subtle. Refined. Personal.</p>
             </div>
             <nav className="footer__nav" aria-label="Footer navigation">
               <p className="footer__nav-title">Explore</p>
-              <a href="#philosophy" className="footer__link">Philosophy</a>
-              <a href="#doctor" className="footer__link">The Doctor</a>
+              <Link to="/about" className="footer__link">About</Link>
               <a href="#treatments" className="footer__link">Treatments</a>
               <a href="#booking" className="footer__link">Book</a>
             </nav>
@@ -256,16 +139,21 @@ export default function V1() {
             <div className="footer__social">
               <p className="footer__nav-title">Follow</p>
               <div className="footer__social-icons">
-                <a href="#" className="footer__social-link" aria-label="Instagram">
+                <a href="https://www.instagram.com/dermancy_medical_house/" target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="Instagram">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                     <circle cx="12" cy="12" r="5" />
                     <circle cx="17.5" cy="6.5" r="1" />
                   </svg>
                 </a>
-                <a href="#" className="footer__social-link" aria-label="Facebook">
+                <a href="https://www.facebook.com/giannis.michalakis.3/" target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="Facebook">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
+                </a>
+                <a href="https://www.tiktok.com/@dr_michalakis" target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="TikTok">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
                   </svg>
                 </a>
               </div>
@@ -276,15 +164,167 @@ export default function V1() {
           </div>
         </div>
       </footer>
+    </>
+  );
+}
 
-      {/* ========== MOBILE STICKY BOOKING BUTTON ========== */}
-      <div className="sticky-booking" id="stickyBooking">
-        <a href="#booking" className="btn btn--primary btn--full">Book Appointment</a>
+
+/* ============================================
+   V1 Content Sections
+   ============================================ */
+
+function V1ContentSections() {
+  const parallaxSections: ParallaxSection[] = [
+    {
+      id: 'philosophy',
+      reverse: true,
+      imageUrl: '/images/textbook-hands.jpg',
+      imageAlt: 'Dr. Michalakis reviewing dermatology reference',
+      content: (
+        <div>
+          <p className="eyebrow">Our philosophy</p>
+          <h2 className="section-title">We listen before we treat</h2>
+          <p className="body-text" style={{ textAlign: 'justify' }}>
+            Every patient arrives with a different face, a different concern, a different expectation. Our work begins long before any procedure — in the conversation, the assessment, the trust that forms when someone feels understood.
+          </p>
+          <Link to="/about" className="text-link" style={{ marginTop: 'var(--space-md)', display: 'inline-block' }}>
+            Read more &rarr;
+          </Link>
+        </div>
+      ),
+    },
+    {
+      id: 'doctor',
+      reverse: false,
+      content: (
+        <div>
+          <p className="eyebrow">{siteData.sections.doctor.eyebrow}</p>
+          <h2 className="section-title">{siteData.sections.doctor.title}</h2>
+          <p style={{ fontSize: 'var(--fs-sm)', letterSpacing: '0.04em', color: 'var(--color-muted)', marginBottom: 'var(--space-sm)', fontFamily: 'var(--font-sans)' }}>
+            {siteData.sections.doctor.credentials}
+          </p>
+          <p className="body-text" style={{ textAlign: 'justify' }}>{siteData.sections.doctor.text}</p>
+          <Link to="/about" className="text-link" style={{ marginTop: 'var(--space-md)', display: 'inline-block' }}>
+            Discover the Approach &rarr;
+          </Link>
+        </div>
+      ),
+      imageElement: (
+        <img
+          src="/images/dr-michalakis.jpg"
+          alt="Dr. Ioannis Michalakis"
+          style={{
+            width: '100%',
+            maxWidth: 340,
+            aspectRatio: '3 / 4',
+            objectFit: 'cover',
+            objectPosition: 'top center',
+            borderRadius: 8,
+          }}
+          loading="lazy"
+        />
+      ),
+    },
+  ];
+
+  return (
+    <>
+      {/* ===== SECTION 2: ABOUT / INTRO — centered with MagicText ===== */}
+      <section className="section" id="brand" style={{ background: 'var(--color-ivory)' }}>
+        <div className="container" style={{
+          maxWidth: 720,
+          margin: '0 auto',
+          textAlign: 'center',
+        }}>
+          <h2 style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+            fontWeight: 400,
+            lineHeight: 1.25,
+            color: 'var(--color-charcoal)',
+            marginBottom: 'var(--space-lg)',
+          }}>
+            Where science meets the art of subtlety
+          </h2>
+          <MagicText
+            text="Dermancy Medical House was founded on the belief that aesthetic medicine demands the same rigour as any medical discipline — meticulous assessment, anatomical expertise, and an unwavering commitment to natural results."
+            className="justify-center text-base leading-relaxed"
+          />
+          <div style={{ marginTop: 'var(--space-lg)', textAlign: 'center' }}>
+            <Link to="/about" className="text-link">
+              Read more &rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTIONS 3 & 4: PHILOSOPHY + DOCTOR with Parallax ===== */}
+      <div style={{ background: 'var(--color-ivory)' }}>
+        <ParallaxScrollFeatureSection
+          sections={parallaxSections}
+          className="max-w-[1200px] mx-auto"
+        />
       </div>
     </>
   );
 }
 
+/* ============================================
+   Section 6: 3D Scanning — dark charcoal bg
+   ============================================ */
+
+function V1ScanningSection() {
+  return (
+    <section id="scanning" style={{
+      background: '#2C2C2A',
+      padding: 'clamp(80px, 10vw, 100px) clamp(28px, 4vw, 48px)',
+    }}>
+      <div style={{ maxWidth: 620, margin: '0 auto' }} className="reveal">
+        <p style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 11,
+          fontWeight: 500,
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          color: '#C4A96A',
+          marginBottom: 16,
+        }}>
+          3D facial scanning
+        </p>
+        <h2 style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)',
+          fontWeight: 400,
+          lineHeight: 1.25,
+          color: '#F5F3EE',
+          margin: '0 0 14px',
+        }}>
+          See the result before the first injection
+        </h2>
+        <p style={{
+          fontFamily: 'var(--font-display)',
+          fontStyle: 'italic',
+          fontSize: 18,
+          color: '#C4A96A',
+          margin: '0 0 28px',
+        }}>
+          Precision mapped to your anatomy.
+        </p>
+        <p style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 15,
+          lineHeight: 1.75,
+          color: '#B4B2A9',
+          margin: 0,
+          textAlign: 'justify',
+        }}>
+          Using advanced 3D scanning, Dr. Michalakis captures a precise digital model of the treatment area — showing you exactly what a specific treatment will achieve, how proportions will shift, and where the boundaries of natural enhancement lie.
+        </p>
+        {/* TODO: add 3D scanner photo from next shoot */}
+      </div>
+    </section>
+  );
+}
 
 /* ============================================
    Booking Section (isolated for form state)
@@ -325,69 +365,134 @@ function BookingSection() {
     });
   };
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    padding: '12px 14px',
+    fontSize: 14,
+    fontFamily: 'var(--font-sans)',
+    background: '#F5F3EE',
+    border: '0.5px solid rgba(0,0,0,0.08)',
+    borderRadius: 8,
+    color: 'var(--color-charcoal)',
+    outline: 'none',
+    transition: 'border-color 0.2s ease',
+  };
+
   return (
-    <section className="section booking" id="booking">
-      <div className="container">
-        <div className="booking__card reveal">
-          <p className="eyebrow text-center">Book a Consultation</p>
-          <h2 className="section-title text-center">Begin Your Journey</h2>
+    <section id="booking" style={{
+      background: 'var(--color-ivory)',
+      padding: 'clamp(80px, 10vw, 100px) clamp(28px, 4vw, 48px)',
+    }}>
+      <div className="reveal" style={{
+        background: '#FAFAF7',
+        borderRadius: 16,
+        border: '0.5px solid rgba(0,0,0,0.06)',
+        padding: '48px 28px 40px',
+        maxWidth: 440,
+        margin: '0 auto',
+      }}>
+        <p style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 11,
+          fontWeight: 500,
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          color: '#B8A882',
+          marginBottom: 12,
+          textAlign: 'center',
+        }}>
+          Book a Consultation
+        </p>
+        <h2 style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)',
+          fontWeight: 400,
+          lineHeight: 1.25,
+          color: 'var(--color-charcoal)',
+          margin: '0 0 14px',
+          textAlign: 'center',
+        }}>
+          Begin Your Journey
+        </h2>
+        <p style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 14,
+          color: '#888780',
+          textAlign: 'center',
+          margin: '0 0 32px',
+          lineHeight: 1.5,
+        }}>
+          Complimentary 15-minute consultation.<br />
+          We'll confirm via email within 24 hours.
+        </p>
 
-          <form className="booking__form" onSubmit={handleSubmit} noValidate>
-            <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
-              <label htmlFor="name" className="form-label">Full Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className={`form-input ${errors.name ? 'is-invalid' : ''}`}
-                placeholder="Your name"
-                required
-                autoComplete="name"
-                onInput={() => clearError('name')}
-              />
-              <span className="form-error">Please enter your name</span>
-            </div>
+        <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div>
+            <label style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-charcoal)', display: 'block', marginBottom: 6 }}>
+              Full Name
+            </label>
+            <input
+              type="text" name="name" placeholder="Your name" required autoComplete="name"
+              style={{ ...inputStyle, borderColor: errors.name ? '#c0392b' : undefined }}
+              onFocus={e => (e.currentTarget.style.borderColor = '#B8A882')}
+              onBlur={e => (e.currentTarget.style.borderColor = errors.name ? '#c0392b' : 'rgba(0,0,0,0.08)')}
+              onInput={() => clearError('name')}
+            />
+            {errors.name && <span style={{ fontSize: 11, color: '#c0392b', marginTop: 4, display: 'block' }}>Please enter your name</span>}
+          </div>
 
-            <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
-              <label htmlFor="email" className="form-label">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className={`form-input ${errors.email ? 'is-invalid' : ''}`}
-                placeholder="your@email.com"
-                required
-                autoComplete="email"
-                onInput={() => clearError('email')}
-              />
-              <span className="form-error">Please enter a valid email</span>
-            </div>
+          <div>
+            <label style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-charcoal)', display: 'block', marginBottom: 6 }}>
+              Email
+            </label>
+            <input
+              type="email" name="email" placeholder="your@email.com" required autoComplete="email"
+              style={{ ...inputStyle, borderColor: errors.email ? '#c0392b' : undefined }}
+              onFocus={e => (e.currentTarget.style.borderColor = '#B8A882')}
+              onBlur={e => (e.currentTarget.style.borderColor = errors.email ? '#c0392b' : 'rgba(0,0,0,0.08)')}
+              onInput={() => clearError('email')}
+            />
+            {errors.email && <span style={{ fontSize: 11, color: '#c0392b', marginTop: 4, display: 'block' }}>Please enter a valid email</span>}
+          </div>
 
-            <div className={`form-group ${errors.phone ? 'has-error' : ''}`}>
-              <label htmlFor="phone" className="form-label">Phone</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                className={`form-input ${errors.phone ? 'is-invalid' : ''}`}
-                placeholder="+30 000 000 0000"
-                required
-                autoComplete="tel"
-                onInput={() => clearError('phone')}
-              />
-              <span className="form-error">Please enter your phone number</span>
-            </div>
+          <div>
+            <label style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-charcoal)', display: 'block', marginBottom: 6 }}>
+              Phone
+            </label>
+            <input
+              type="tel" name="phone" placeholder="+30 000 000 0000" required autoComplete="tel"
+              style={{ ...inputStyle, borderColor: errors.phone ? '#c0392b' : undefined }}
+              onFocus={e => (e.currentTarget.style.borderColor = '#B8A882')}
+              onBlur={e => (e.currentTarget.style.borderColor = errors.phone ? '#c0392b' : 'rgba(0,0,0,0.08)')}
+              onInput={() => clearError('phone')}
+            />
+            {errors.phone && <span style={{ fontSize: 11, color: '#c0392b', marginTop: 4, display: 'block' }}>Please enter your phone number</span>}
+          </div>
 
-            <button
-              type="submit"
-              className="btn btn--primary btn--full"
-              disabled={submitted}
-              style={submitted ? { opacity: 0.7 } : undefined}
-            >
-              {submitted ? 'Thank You!' : 'Continue'}
-            </button>
-          </form>
-        </div>
+          <button
+            type="submit"
+            disabled={submitted}
+            style={{
+              width: '100%',
+              padding: 14,
+              background: '#2C2C2A',
+              color: '#F5F3EE',
+              border: 'none',
+              borderRadius: 8,
+              fontFamily: 'var(--font-sans)',
+              fontSize: 13,
+              fontWeight: 500,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+              marginTop: 6,
+              transition: 'opacity 0.2s',
+              opacity: submitted ? 0.7 : 1,
+            }}
+          >
+            {submitted ? 'Thank You!' : 'Book consultation'}
+          </button>
+        </form>
       </div>
     </section>
   );
@@ -395,95 +500,107 @@ function BookingSection() {
 
 
 /* ============================================
-   Treatments Carousel Section
+   Treatments Section — Wave Carousel
    ============================================ */
 
-const treatmentItems: GalleryItem[] = [
+const treatmentCarouselCards: CarouselCard[] = [
   {
-    common: 'Botox',
-    binomial: 'Botulinum Toxin Therapy',
-    photo: {
-      url: 'https://images.unsplash.com/photo-1594824476967-48c8b964f137?w=600&q=80',
-      text: 'Botox treatment',
-      pos: 'center',
-      by: 'Dermancy',
-    },
+    title: 'Dermal Fillers',
+    subtitle: 'Restoring volume and contour with precision placement.',
+    image: '/images/syringe-prep.jpg',
+    badge: { text: 'Popular', variant: 'gold' },
+    href: '/care/fillers',
   },
   {
-    common: 'Fillers',
-    binomial: 'Dermal Filler Treatments',
-    photo: {
-      url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=80',
-      text: 'Dermal fillers treatment',
-      pos: 'center',
-      by: 'Dermancy',
-    },
+    title: 'Botulinum Therapy',
+    subtitle: 'Targeted relaxation of expression lines for a natural result.',
+    image: '/images/botox-vials.jpg',
+    badge: { text: 'Non-invasive', variant: 'sage' },
+    href: '/care/botox',
   },
   {
-    common: 'Skin Boosters',
-    binomial: 'Hyaluronic Skin Renewal',
-    photo: {
-      url: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80',
-      text: 'Skin boosters treatment',
-      pos: 'center',
-      by: 'Dermancy',
-    },
+    title: 'Skin Boosters',
+    subtitle: 'Deep hydration and collagen stimulation for luminous skin.',
+    badge: { text: 'Rejuvenation', variant: 'gold' },
+    href: '/care/skin-boosters',
   },
   {
-    common: 'Mesotherapy',
-    binomial: 'Microinjection Therapy',
-    photo: {
-      url: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80',
-      text: 'Mesotherapy treatment',
-      pos: 'center top',
-      by: 'Dermancy',
-    },
+    title: 'Mesotherapy',
+    subtitle: 'Customised microinjection cocktails to nourish from within.',
+    badge: { text: 'Advanced', variant: 'muted' },
+    href: '/care/mesotherapy',
   },
   {
-    common: 'Chemical Peels',
-    binomial: 'Advanced Skin Resurfacing',
-    photo: {
-      url: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80',
-      text: 'Chemical peel treatment',
-      pos: 'center',
-      by: 'Dermancy',
-    },
+    title: 'Biostimulators',
+    subtitle: 'Activating your own collagen for long-term structural renewal.',
+    badge: { text: 'Regenerative', variant: 'sage' },
+    href: '/care/biostimulator',
   },
   {
-    common: 'Microneedling',
-    binomial: 'Collagen Induction Therapy',
-    photo: {
-      url: 'https://images.unsplash.com/photo-1598524374912-6b0b0bdd29a0?w=600&q=80',
-      text: 'Microneedling treatment',
-      pos: 'center',
-      by: 'Dermancy',
-    },
+    title: 'PRP Rejuvenation',
+    subtitle: 'Your own biology redirected for face and scalp renewal.',
+    badge: { text: 'Natural', variant: 'warm' },
+    href: '/care/prp-face-scalp-rejuvenation',
+  },
+  {
+    title: 'Body Treatments',
+    subtitle: 'Medical body contouring for firmness, texture, and tone.',
+    badge: { text: 'Body', variant: 'warm' },
+    href: '/care/body-treatments',
+  },
+  {
+    title: 'Hyperhidrosis',
+    subtitle: 'Medical-grade therapy for excessive sweating and comfort.',
+    badge: { text: 'Medical', variant: 'muted' },
+    href: '/care/hyperhidrosis-treatment',
   },
 ];
 
-function TreatmentsCarousel() {
+function TreatmentsGrid() {
   return (
-    <section className="section treatments" id="treatments" style={{ overflow: 'hidden' }}>
-      <div className="container">
-        <div className="text-center reveal" style={{ marginBottom: 'var(--space-lg)' }}>
+    <section id="treatments" style={{
+      background: 'var(--color-ivory)',
+      padding: 'clamp(80px, 10vw, 100px) 0',
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(28px, 4vw, 48px)' }}>
+        <div className="text-center reveal" style={{ marginBottom: 16 }}>
           <p className="eyebrow">Our Treatments</p>
           <h2 className="section-title">Refined Aesthetic Solutions</h2>
-          <p className="body-text" style={{ margin: '0 auto', maxWidth: '480px' }}>
-            Swipe or scroll to explore our curated range of treatments.
+          <p className="body-text" style={{ margin: '0 auto', maxWidth: '520px' }}>
+            {siteData.sections.treatmentsIntro.text}
           </p>
         </div>
       </div>
 
       <div className="reveal">
-        <CircularGallery
-          items={treatmentItems}
-          radius={500}
-          autoRotateSpeed={0.03}
-        />
+        <RuixenCarouselWave cards={treatmentCarouselCards} />
       </div>
 
-      <div className="text-center reveal" style={{ marginTop: 'var(--space-lg)' }}>
-        <a href="#" className="text-link">View All Treatments →</a>
+      {/* Explore all treatments button */}
+      <div className="reveal" style={{ textAlign: 'center', marginTop: 24 }}>
+        <Link
+          to="/treatments"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '14px 32px',
+            background: '#2C2C2A',
+            color: '#F5F3EE',
+            borderRadius: 8,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 13,
+            fontWeight: 500,
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            transition: 'opacity 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+        >
+          Explore all treatments
+        </Link>
       </div>
     </section>
   );
